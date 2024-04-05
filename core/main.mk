@@ -388,10 +388,7 @@ endif
 
 ## user/userdebug ##
 
-user_variant := user
-ifeq ($(TARGET_BUILD_VARIANT),eng)
-user_variant :=
-endif
+user_variant := $(filter user userdebug,$(TARGET_BUILD_VARIANT))
 enable_target_debugging := true
 tags_to_install :=
 ifneq (,$(user_variant))
@@ -416,7 +413,7 @@ ifneq (,$(user_variant))
 
 else # !user_variant
   # Turn on checkjni for non-user builds.
-  # ADDITIONAL_SYSTEM_PROPERTIES += ro.kernel.android.checkjni=1
+  ADDITIONAL_SYSTEM_PROPERTIES += ro.kernel.android.checkjni=1
   # Set device insecure for non-user builds.
   ADDITIONAL_SYSTEM_PROPERTIES += ro.secure=0
   # Allow mock locations by default for non user builds
@@ -494,7 +491,7 @@ ADDITIONAL_SYSTEM_PROPERTIES += ro.force.debuggable=0
 
 # ------------------------------------------------------------
 # Include vendor specific additions to build properties
--include vendor/evolution/build/core/main.mk
+-include vendor/lineage/build/core/main.mk
 
 # ------------------------------------------------------------
 # Define a function that, given a list of module tags, returns
